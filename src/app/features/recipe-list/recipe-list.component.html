@@ -1,1 +1,20 @@
-<p>recipe-list works!</p>
+<div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div 
+      *ngFor="let recipe of recipes"
+      class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group cursor-pointer"
+      [routerLink]="['/recipe', recipe.idMeal]"
+    >
+      <img
+        [src]="recipe.strMealThumb"
+        [alt]="recipe.strMeal"
+        class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+      />
+      <div class="p-4">
+        <h2 class="text-lg font-bold mb-1 truncate">{{ recipe.strMeal }}</h2>
+        <p class="text-xs text-gray-500">Catégorie : {{ recipe.strCategory }}</p>
+        <p class="text-xs text-gray-500">Origine : {{ recipe.strArea }}</p>
+      </div>
+    </div>
+  </div>
+  
+  
