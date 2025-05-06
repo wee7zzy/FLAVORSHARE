@@ -1,26 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { Recipe, RecipeService } from '../../core/services/recipe.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Recipe, RecipeService } from '../../core/service/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.css']
+  styleUrl: './recipe-list.component.css'
 })
-
-export class RecipeListComponent implements OnInit {
-  recipes: Recipe[] = [];
+export class RecipeListComponent {
+  allRecipes: Recipe[] = [];
+  filteredRecipes: Recipe[] = [];
+  searchTerm: string = '';
+  selectedCategory: string = '';
 
   constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    // On cherche "chicken" par défaut pour tester
-    this.recipeService.searchRecipes('beef').subscribe(data => {
-      this.recipes = data;
+    this.recipeService.getAllRecipes().subscribe(recipes => {
+      this.allRecipes = recipes;
+      this.filteredRecipes = recipes;
     });
+  }
+
+  onSearch(): void {
+    this.filteredRecipes = this.allRecipes.filter(recipe =>
+      recipe.strMeal.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  onFilterCategory(): void {
+    if (!this.selectedCategory) {
+      this.filteredRecipes = this.allRecipes;
+    } else {
+      this.filteredRecipes = this.allRecipes.filter(recipe =>
+        recipe.strCategory?.toLowerCase() === this.selectedCategory.toLowerCase()
+      );
+    }
   }
 }

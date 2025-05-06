@@ -1,0 +1,24 @@
+<div *ngIf="recipe" class="p-6 max-w-5xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-lg">
+    <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white">{{ recipe.strMeal }}</h2>
+    
+    <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}"
+         class="w-full h-80 object-cover rounded-lg shadow-md mb-6" />
+  
+    <div class="text-gray-700 dark:text-gray-200 space-y-2">
+      <p><strong>Catégorie :</strong> {{ recipe.strCategory }}</p>
+      <p><strong>Origine :</strong> {{ recipe.strArea }}</p>
+      <p><strong>Instructions :</strong></p>
+      <p class="whitespace-pre-line">{{ recipe.strInstructions }}</p>
+    </div>
+  
+    <div class="mt-6">
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Vidéo de préparation</h3>
+      <iframe *ngIf="recipe.strYoutube"
+              [src]="'https://www.youtube.com/embed/' + recipe.strYoutube.split('=')[1]"
+              class="w-full aspect-video rounded-xl"
+              frameborder="0"
+              allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+  
